@@ -15,12 +15,15 @@ namespace :ubuntu_server_prepare do
     if yesno 'Do you want to apt-get upgrade?'
       invoke_scrpipts << 'ubuntu_server_prepare:upgrade_apt'
     end
-    if yesno 'Do you want to install pagespeed module for nginx?'
-      set :pagespeed_install, true
-    else
-      set :pagespeed_install, false
+    if yesno 'Do you want to install NGINX?'
+      if yesno 'Do you want to install pagespeed module for nginx?'
+        set :pagespeed_install, true
+      else
+        set :pagespeed_install, false
+      end
+      invoke_scrpipts << 'ubuntu_server_prepare:nginx_install'
     end
-    invoke_scrpipts << 'ubuntu_server_prepare:nginx_install'
+
     if yesno 'Do you want to install postgreSQL?'
       set :postgre_username, ask("username for postgreSQL", 'deployer')
       set :postgre_password, ask("password for postgreSQL", '123456')
@@ -84,7 +87,6 @@ namespace :ubuntu_server_prepare do
       execute sudo_command + "sh -c \"echo 'UseDNS no'  >> /etc/ssh/sshd_config\""
       execute sudo_command + "sh -c \"echo 'AllowUsers #{user}'  >> /etc/ssh/sshd_config\""
       execute sudo_command + 'reload ssh'
-
     end
   end
 
@@ -284,16 +286,19 @@ namespace :ubuntu_server_prepare do
   desc 'Push ssh key to server'
   task :push_ssh_keys do
     on roles(:all) do
-      set :key_localtion, ask("private key location", '~/.ssh/id_rsa') if !fetch :key_localtion
+      files =  Dir.glob(Dir.home() + '/.ssh/*').select { |f| f !~ /\.pub|known|config/ }.map {|f| f.gsub!(Dir.home(), '~')}
+      set :key_localtion, ask("private key location (for example: #{files.join(', ')})", '~/.ssh/id_rsa') if !fetch :key_localtion
+      home = Dir.home()
+      key_location = fetch(:key_localtion).gsub('~', home)
+      until File.exists? key_location
+        set :key_localtion, ask("private key location (for example: #{files.join(', ')})", '~/.ssh/id_rsa')
+        key_location = fetch(:key_localtion).gsub('~', home)
+      end
       execute "mkdir -p ~/.ssh"
       user = capture("echo $USER")
-      home = ''
-      run_locally do
-        home = capture("echo $HOME")
-      end
-      key_localtion = fetch(:key_localtion).gsub('~', home)
-      upload! key_localtion, "/home/#{user}/.ssh/"
-      upload! key_localtion + '.pub', "/home/#{user}/.ssh/"
+      upload! key_location, "/home/#{user}/.ssh/git_key"
+      upload! key_location + '.pub', "/home/#{user}/.ssh/git_key.pub"
+      execute "echo 'IdentityFile ~/.ssh/git_key' >> ~/.ssh/config"
       execute "chmod -f 600 ~/.ssh/*"
     end
   end
