@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["goooseman"]
   spec.email         = ["inbox@goooseman.ru"]
   spec.summary       = "A task for Capistrano v3 to prepare Ubuntu 14.04 server for first deployment"
-  spec.description   = "Can install nginx, ngx_pagespeed, postgreSQL, Redis, RVM, Ruby, Rails, Bundler"
+  spec.description   = "Can install nginx, ngx_pagespeed, postgreSQL, Redis, RVM, Ruby, Rails, Bundler. See homepage for additional inforation and instructions."
   spec.homepage      = "http://github.com/goooseman/capistrano3-ubuntu-server-prepare"
   spec.license       = "MIT"
 

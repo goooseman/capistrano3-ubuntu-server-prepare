@@ -174,3 +174,7 @@ to the end of the file
 ------ tmp/pids/ # Unicorn pid files here
 ------ tmp/sockets/ # Unicorn socket files here
 ```
+
+## My other works
+
+Take a look at my [capistrano3-delayed-job](https://github.com/goooseman/capistrano3-delayed-job) (delayed-job daemon management) and [capistrano3-git-push](https://github.com/goooseman/capistrano3-git-push) (automated git add, commit, push before each deploy) Capistrano (v3) gems.
