@@ -272,7 +272,7 @@ namespace :ubuntu_server_prepare do
   desc 'Install RVM with rails'
   task :rvm_install do
     on roles(:all) do
-      execute sudo_command + 'apt-get -y install git curl python-software-properties'
+      execute sudo_command + 'apt-get -y install git curl python-software-properties software-properties-common'
       execute sudo_command + 'add-apt-repository -y ppa:chris-lea/node.js'
       execute sudo_command + 'apt-get update'
       execute sudo_command + 'apt-get -y install nodejs gawk g++ gcc make libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev'
