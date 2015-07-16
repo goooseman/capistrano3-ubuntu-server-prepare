@@ -199,7 +199,6 @@ namespace :ubuntu_server_prepare do
         upload! 'config/production/nginx/nginx_with_pagespeed.conf', "/home/#{user}/sources/nginx/conf/nginx.conf"
       else
         upload! 'config/production/nginx/nginx.conf', "/home/#{user}/sources/nginx/conf/nginx.conf"
-
       end
       upload! 'config/production/nginx/upstart.conf', "/home/#{user}/sources/nginx/conf/"
       execute sudo_command + "cp -f ~/sources/nginx/conf/upstart.conf /etc/init/nginx.conf"
@@ -276,7 +275,7 @@ namespace :ubuntu_server_prepare do
       execute sudo_command + 'add-apt-repository -y ppa:chris-lea/node.js'
       execute sudo_command + 'apt-get update'
       execute sudo_command + 'apt-get -y install nodejs gawk g++ gcc make libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev'
-      execute "gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3"
+      execute "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3"
       execute "\\curl -sSL https://get.rvm.io | bash -s stable --rails --gems=bundler --autolibs=read-fail"
     end
   end
