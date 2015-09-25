@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "capistrano3-ubuntu-server-prepare"
-  spec.version       = "0.0.5"
+  spec.version       = "0.0.6"
   spec.authors       = ["goooseman"]
   spec.email         = ["inbox@goooseman.ru"]
   spec.summary       = "A task for Capistrano v3 to prepare Ubuntu 14.04 server for first deployment"

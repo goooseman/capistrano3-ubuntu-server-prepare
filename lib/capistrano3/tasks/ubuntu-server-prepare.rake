@@ -153,16 +153,16 @@ namespace :ubuntu_server_prepare do
                 end
             end
 
-            nginx_version = '1.6.2'
+            nginx_version = '1.8.0'
             within '~/sources/nginx' do
                 execute :wget, "http://nginx.org/download/nginx-#{nginx_version}.tar.gz"
                 execute :tar, "-xvzf nginx-#{nginx_version}.tar.gz"
             end
             within "~/sources/nginx/nginx-#{nginx_version}" do
                 if fetch :pagespeed_install
-                    execute "cd ~/sources/nginx/nginx-#{nginx_version} && ./configure --add-module=$HOME/sources/nginx/ngx_pagespeed-release-#{nps_version}-beta"
+                    execute "cd ~/sources/nginx/nginx-#{nginx_version} && ./configure --add-module=$HOME/sources/nginx/ngx_pagespeed-release-#{nps_version}-beta --with-http_ssl_module"
                 else
-                    execute "cd ~/sources/nginx/nginx-#{nginx_version} && ./configure"
+                    execute "cd ~/sources/nginx/nginx-#{nginx_version} && ./configure --with-http_ssl_module"
                 end
                 execute :make
             end
