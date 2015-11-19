@@ -138,7 +138,7 @@ namespace :ubuntu_server_prepare do
             end
 
 
-            execute sudo_command + 'apt-get  --yes --force-yes install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip checkinstall'
+            execute sudo_command + 'apt-get  --yes --force-yes install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip checkinstall libssl-dev'
             execute 'mkdir -p ~/sources/nginx'
 
             if fetch :pagespeed_install
